@@ -1,0 +1,36 @@
+<%= form_for(@actor) do |f| %>
+
+  <div class="field">
+    <%= f.label :first_name, "First Name" %><br />
+    <%= f.text_field :first_name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :last_name, "Last Name" %><br />
+    <%= f.text_field :last_name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :description, "Description" %><br />
+    <%= f.text_field :description %>
+  </div>
+
+  <div class="field">
+    <%= f.label :movie, "Movie" %><br />
+    <%= f.text_field :movie %>
+  </div>
+
+  <div class="field">
+    <%= f.label :book_title, "Book Title" %><br />
+    <%= f.text_field :book_title %>
+  </div>
+
+  <div class="field">
+    <%= f.label :year, "Year" %><br />
+    <%= f.text_field :year %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

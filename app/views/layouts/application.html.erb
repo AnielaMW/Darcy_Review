@@ -9,6 +9,29 @@
   </head>
 
   <body>
+    <!-- nav bar -->
+    <h1>Darcy Review</h1>
+    <h2>Who Darcyed it best?</h2>
+
+    <nav class="top-bar" data-topbar>
+      <section class="top-bar-section">
+        <ul class="left">
+          <% if user_signed_in? %>
+            <li><a href="/users/edit">Update Profile</a></li>
+            <li><%= link_to('Sign Out', destroy_user_session_path, :method => :delete) %></li>
+          <% else %>
+            <li><a href="/users/sign_up">Sign Up</a></li>
+            <li><a href="/users/sign_in">Sign In</a></li>
+          <% end %>
+        </ul>
+      </section>
+    </nav>
+
+    <!-- flash messages -->
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+
+      <!-- main content -->
     <%= yield %>
   </body>
 </html>
