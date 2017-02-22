@@ -2,16 +2,14 @@ require "rails_helper"
 
 feature "view actor show", %Q{
   As a user
-  I want to view the details of an item
+  I want to view the details of an Actor
   So that I can get more information about it
   } do
 
     # ACCEPTANCE CRITERIA
-    # * User should be authenticated.
     # * User should be able to click a link from the index to view the details of an actor.
     # * User should be able to view only the available details of an actor.
     # * User should not see a detail section if the information is unavailable.
-    # * User should get an error if not signed_in.
 
   scenario "sucessfully view full actor details" do
     colin = FactoryGirl.create(:colin)

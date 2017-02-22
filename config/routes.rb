@@ -7,10 +7,10 @@ Rails.application.routes.draw do
   resources :users
 
   resources :actors do
-    resources :reviews, only: [:new, :create, :index]
+    resources :reviews, only: [:index, :new, :create]
   end
 
-  resources :reviews, except: [:new, :create, :index] do
+  resources :reviews, except: [:index, :new, :create] do
     resources :votes, only: [:new, :create, :index]
   end
 
