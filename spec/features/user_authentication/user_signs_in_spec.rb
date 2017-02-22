@@ -13,7 +13,7 @@ feature "sign_in to account", %Q{
     # * If information is invalid, User gets error message.
 
   scenario "sucessfully sign_in when user enters valid information" do
-    lizzie = FactoryGirl.create(:user)
+    lizzie = FactoryGirl.create(:lizzie)
 
     visit root_path
     click_link 'Sign In'
@@ -34,7 +34,7 @@ feature "sign_in to account", %Q{
   end
 
   scenario "fails to sign_in when user enters invalid email" do
-    lydia = FactoryGirl.create(:user)
+    lydia = FactoryGirl.create(:lizzie)
 
     visit root_path
     click_link 'Sign In'
@@ -47,11 +47,11 @@ feature "sign_in to account", %Q{
   end
 
   scenario "fails to sign_in when user enters invalid password" do
-    wrong_lizzie = FactoryGirl.create(:user)
+    lydia = FactoryGirl.create(:lizzie)
 
     visit root_path
     click_link 'Sign In'
-    fill_in "Email", with: "#{wrong_lizzie.email}"
+    fill_in "Email", with: "#{lydia.email}"
     fill_in "Password", with: "momsnewfavgirl"
     click_button "Sign In"
 
