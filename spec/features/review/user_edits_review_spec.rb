@@ -19,18 +19,18 @@ feature "edit review", %Q{
     edit_review = {description: "He's a natural red-head.", rating: 10}
 
     sign_in review.user
-    visit review_path(review[:id])
+    visit review_path(review.id)
     click_link "Edit Review"
 
-    expect(page).to have_current_path(edit_review_path(review[:id]))
+    expect(page).to have_current_path(edit_review_path(review.id))
 
-    fill_in "Description", with: "#{edit_review[:description]}"
-    fill_in "Rating", with: "#{edit_review[:rating]}"
+    fill_in "Description", with: edit_review[:description]
+    fill_in "Rating", with: edit_review[:rating]
     click_button "Update Review"
 
-    expect(page).to have_current_path(review_path(review[:id]))
-    expect(page).to have_content("#{edit_review[:description]}")
-    expect(page).to have_content("#{edit_review[:rating]}")
+    expect(page).to have_current_path(review_path(review.id))
+    expect(page).to have_content(edit_review[:description])
+    expect(page).to have_content(edit_review[:rating])
   end
 
   scenario "fails to edit review when user is creator and enters invalid information" do
@@ -38,12 +38,12 @@ feature "edit review", %Q{
     edit_review = {description: "", rating: ""}
 
     sign_in review.user
-    visit edit_review_path(review[:id])
-    fill_in "Description", with: "#{edit_review[:description]}"
-    fill_in "Rating", with: "#{edit_review[:rating]}"
+    visit edit_review_path(review.id)
+    fill_in "Description", with: edit_review[:description]
+    fill_in "Rating", with: edit_review[:rating]
     click_button "Update Review"
 
-    expect(page).not_to have_current_path(review_path(review[:id]))
+    expect(page).not_to have_current_path(review_path(review.id))
     expect(page).to have_content("Description can't be blank")
     expect(page).to have_content("Rating can't be blank")
   end
@@ -54,13 +54,13 @@ feature "edit review", %Q{
     edit_review = {description: "He's a natural red-head.", rating: 10}
 
     sign_in jane
-    visit edit_review_path(review[:id])
-    fill_in "Description", with: "#{edit_review[:description]}"
-    fill_in "Rating", with: "#{edit_review[:rating]}"
+    visit edit_review_path(review.id)
+    fill_in "Description", with: edit_review[:description]
+    fill_in "Rating", with: edit_review[:rating]
     click_button "Update Review"
 
-    expect(page).to have_current_path(review_path(review[:id]))
-    expect(page).to have_content("#{edit_review[:description]}")
+    expect(page).to have_current_path(review_path(review.id))
+    expect(page).to have_content(edit_review[:description])
   end
 
   scenario "fails to edit review when user is admin and enters invalid information" do
@@ -69,12 +69,12 @@ feature "edit review", %Q{
     edit_review = {description: "He's a natural red-head.", rating: 10}
 
     sign_in jane
-    visit edit_review_path(review[:id])
-    fill_in "Description", with: "#{edit_review[:description]}"
-    fill_in "Rating", with: "#{edit_review[:rating]}"
+    visit edit_review_path(review.id)
+    fill_in "Description", with: edit_review[:description]
+    fill_in "Rating", with: edit_review[:rating]
     click_button "Update Review"
 
-    expect(page).not_to have_current_path(review_path(review[:id]))
+    expect(page).not_to have_current_path(review_path(review.id))
     expect(page).to have_content("Description can't be blank")
     expect(page).to have_content("Rating can't be blank")
   end
@@ -83,12 +83,12 @@ feature "edit review", %Q{
     lizzie = FactoryGirl.create(:lizzie)
     review = FactoryGirl.create(:review)
 
-    visit review_path(review[:id])
+    visit review_path(review.id)
 
     expect(page).not_to have_content("Edit Review")
 
     sign_in lizzie
-    visit review_path(review[:id])
+    visit review_path(review.id)
 
     expect(page).not_to have_content("Edit Review")
   end

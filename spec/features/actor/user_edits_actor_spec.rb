@@ -16,48 +16,45 @@ feature "edit actor", %Q{
     # * If required information is incomplete, Actor is not edited and user gets error message.
 
   scenario "sucessfully edit actor when user is creator and enters all information" do
-    lizzie = FactoryGirl.create(:lizzie)
-    olie = FactoryGirl.create(:olie, user_id: lizzie.id)
+    olie = FactoryGirl.create(:olie)
     edit_olie = {description: "He prefered Vivien Leigh to Elizabeth Bennet."}
 
-    sign_in lizzie
-    visit "/actors/#{olie[:id]}"
+    sign_in olie.user
+    visit actor_path(olie.id)
     click_link "Edit Actor"
 
-    expect(page).to have_current_path("/actors/#{olie[:id]}/edit")
+    expect(page).to have_current_path(edit_actor_path(olie.id))
 
-    fill_in "Description", with: "#{edit_olie[:description]}"
+    fill_in "Description", with: edit_olie[:description]
     click_button "Update Actor"
 
-    expect(page).to have_current_path("/actors/#{olie[:id]}")
-    expect(page).to have_content("#{edit_olie[:description]}")
+    expect(page).to have_current_path(actor_path(olie.id))
+    expect(page).to have_content(edit_olie[:description])
   end
 
   scenario "sucessfully edit actor when user is creator and enters only required information" do
-    lizzie = FactoryGirl.create(:lizzie)
-    colin = FactoryGirl.create(:colin, user_id: lizzie.id)
+    colin = FactoryGirl.create(:colin)
     edit_colin = {year: 1995}
 
-    sign_in lizzie
-    visit "/actors/#{colin[:id]}/edit"
-    fill_in "Year", with: "#{edit_colin[:year]}"
+    sign_in colin.user
+    visit edit_actor_path(colin.id)
+    fill_in "Year", with: edit_colin[:year]
     click_button "Update Actor"
 
-    expect(page).to have_current_path("/actors/#{colin[:id]}")
+    expect(page).to have_current_path(actor_path(colin.id))
     expect(page).to have_content(edit_colin[:year])
   end
 
   scenario "fails to edit actor when user is creator and enters invalid information" do
-    lizzie = FactoryGirl.create(:lizzie)
-    colin = FactoryGirl.create(:colin, user_id: lizzie.id)
+    colin = FactoryGirl.create(:colin)
     edit_colin = {first_name: ""}
 
-    sign_in lizzie
-    visit "/actors/#{colin[:id]}/edit"
-    fill_in "First Name", with: "#{edit_colin[:first_name]}"
+    sign_in colin.user
+    visit edit_actor_path(colin.id)
+    fill_in "First Name", with: edit_colin[:first_name]
     click_button "Update Actor"
 
-    expect(page).not_to have_current_path("/actors/#{colin[:id]}")
+    expect(page).not_to have_current_path(actor_path(colin.id))
     expect(page).to have_content("First name can't be blank")
   end
 
@@ -67,20 +64,16 @@ feature "edit actor", %Q{
     edit_olie = {description: "He prefered Vivien Leigh to Elizabeth Bennet."}
 
     sign_in jane
-    visit "/actors/#{olie[:id]}"
+    visit actor_path(olie.id)
     click_link "Edit Actor"
 
-    expect(page).to have_current_path("/actors/#{olie[:id]}/edit")
+    expect(page).to have_current_path(edit_actor_path(olie.id))
 
-    fill_in "Last Name", with: "#{edit_olie[:description]}"
+    fill_in "Last Name", with: edit_olie[:description]
     click_button "Update Actor"
 
-    expect(page).to have_current_path("/actors/#{olie[:id]}")
+    expect(page).to have_current_path(actor_path(olie.id))
     expect(page).to have_content(edit_olie[:description])
-    sign_in jane
-
-    expect(page).to have_current_path("/actors/#{olie[:id]}")
-    expect(page).to have_content("#{edit_olie[:description]}")
   end
 
   scenario "sucessfully edit actor when user is admin and enters only required information" do
@@ -89,11 +82,11 @@ feature "edit actor", %Q{
     edit_colin = {year: 1995}
 
     sign_in jane
-    visit "/actors/#{colin[:id]}/edit"
-    fill_in "Year", with: "#{edit_colin[:year]}"
+    visit edit_actor_path(colin.id)
+    fill_in "Year", with: edit_colin[:year]
     click_button "Update Actor"
 
-    expect(page).to have_current_path("/actors/#{colin[:id]}")
+    expect(page).to have_current_path(actor_path(colin.id))
     expect(page).to have_content(edit_colin[:year])
   end
 
@@ -103,11 +96,11 @@ feature "edit actor", %Q{
     edit_colin = {first_name: ""}
 
     sign_in jane
-    visit "/actors/#{colin[:id]}/edit"
-    fill_in "First Name", with: "#{edit_colin[:first_name]}"
+    visit edit_actor_path(colin.id)
+    fill_in "First Name", with: edit_colin[:first_name]
     click_button "Update Actor"
 
-    expect(page).not_to have_current_path("/actors/#{colin[:id]}")
+    expect(page).not_to have_current_path(actor_path(colin.id))
     expect(page).to have_content("First name can't be blank")
   end
 
@@ -115,14 +108,13 @@ feature "edit actor", %Q{
     lizzie = FactoryGirl.create(:lizzie)
     colin = FactoryGirl.create(:colin)
 
-    visit "/actors/#{colin[:id]}"
+    visit actor_path(colin.id)
 
     expect(page).not_to have_content("Edit Actor")
 
     sign_in lizzie
-    visit "/actors/#{colin[:id]}"
+    visit actor_path(colin.id)
 
     expect(page).not_to have_content("Edit Actor")
-
   end
 end

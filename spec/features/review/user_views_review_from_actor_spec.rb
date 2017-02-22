@@ -13,10 +13,10 @@ feature "view review from actor show", %Q{
   scenario "sucessfully view review list" do
     review = FactoryGirl.create(:review)
 
-    visit actor_path(review[:actor_id])
+    visit actor_path(review.actor_id)
 
-    expect(page).to have_content("#{review[:description]}")
-    expect(page).to have_content("#{review[:rating]}")
-    expect(page).to have_content("#{review.user[:first_name]}")
+    expect(page).to have_content(review.description)
+    expect(page).to have_content(review.rating)
+    expect(page).to have_content(review.user.first_name)
   end
 end
