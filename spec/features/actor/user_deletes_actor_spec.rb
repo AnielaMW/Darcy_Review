@@ -11,15 +11,14 @@ feature "delete actor", %Q{
     # * If User is not the original creator of the Actor nor an admin the User cannot see a delete link.
 
   scenario "sucessfully delete actor when user is creator" do
-    lizzie = FactoryGirl.create(:lizzie)
-    olie = FactoryGirl.create(:olie, user_id: lizzie.id)
+    olie = FactoryGirl.create(:olie)
 
-    sign_in lizzie
-    visit "/actors/#{olie[:id]}"
+    sign_in olie.user
+    visit actor_path(olie.id)
     click_link "Delete Actor"
 
     expect(page).to have_current_path(root_path)
-    expect(page).not_to have_content("#{olie.full_name}")
+    expect(page).not_to have_content(olie.full_name)
   end
 
   scenario "sucessfully delete actor when user is admin" do
@@ -27,23 +26,23 @@ feature "delete actor", %Q{
     olie = FactoryGirl.create(:olie)
 
     sign_in jane
-    visit "/actors/#{olie[:id]}"
+    visit actor_path(olie.id)
     click_link "Delete Actor"
 
     expect(page).to have_current_path(root_path)
-    expect(page).not_to have_content("#{olie.full_name}")
+    expect(page).not_to have_content(olie.full_name)
   end
 
   scenario "fails to see delete actor option when user is neither creator nor admin" do
     lizzie = FactoryGirl.create(:lizzie)
     colin = FactoryGirl.create(:colin)
 
-    visit "/actors/#{colin[:id]}"
+    visit actor_path(olie.id)
 
     expect(page).not_to have_content("Delete Actor")
 
     sign_in lizzie
-    visit "/actors/#{colin[:id]}"
+    visit actor_path(olie.id)
 
     expect(page).not_to have_content("Delete Actor")
   end

@@ -20,12 +20,12 @@ feature "create actor", %Q{
     sign_in lizzie
     visit root_path
     click_link 'Create New Darcy'
-    fill_in "First Name", with: "#{sam[:first_name]}"
-    fill_in "Last Name", with: "#{sam[:last_name]}"
-    fill_in "Description", with: "#{sam[:description]}"
-    fill_in "Movie", with: "#{sam[:movie]}"
-    fill_in "Book Title", with: "#{sam[:book_title]}"
-    fill_in "Year", with: "#{sam[:year]}"
+    fill_in "First Name", with: sam[:first_name]
+    fill_in "Last Name", with: sam[:last_name]
+    fill_in "Description", with: sam[:description]
+    fill_in "Movie", with: sam[:movie]
+    fill_in "Book Title", with: sam[:book_title]
+    fill_in "Year", with: sam[:year]
     click_button 'Create Actor'
 
     expect(page).to have_content("#{sam[:first_name]} #{sam[:last_name]}")
@@ -36,10 +36,9 @@ feature "create actor", %Q{
     matt = {first_name: "Matthew", last_name: "Macfadyen"}
 
     sign_in lizzie
-    visit root_path
-    click_link 'Create New Darcy'
-    fill_in "First Name", with: "#{matt[:first_name]}"
-    fill_in "Last Name", with: "#{matt[:last_name]}"
+    visit new_actor_path
+    fill_in "First Name", with: matt[:first_name]
+    fill_in "Last Name", with: matt[:last_name]
     click_button 'Create Actor'
 
     expect(page).to have_content("#{matt[:first_name]} #{matt[:last_name]}")
@@ -49,8 +48,7 @@ feature "create actor", %Q{
     lizzie = FactoryGirl.create(:lizzie)
 
     sign_in lizzie
-    visit root_path
-    click_link 'Create New Darcy'
+    visit new_actor_path
     click_button 'Create Actor'
 
     expect(page).to have_content("First name can't be blank")

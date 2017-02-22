@@ -12,11 +12,11 @@ feature "view review show", %Q{
   scenario "sucessfully view full review details" do
     review = FactoryGirl.create(:review)
 
-    visit actor_path(review[:actor_id])
-    click_link "#{review[:id]}"
+    visit actor_path(review.actor_id)
+    click_link review[:id]
 
-    expect(page).to have_content("#{review[:description]}")
-    expect(page).to have_content("#{review[:rating]}")
-    expect(page).to have_content("#{review.user[:first_name]}")
+    expect(page).to have_content(review.description)
+    expect(page).to have_content(review.rating)
+    expect(page).to have_content(review.user.first_name)
   end
 end

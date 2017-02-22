@@ -20,15 +20,15 @@ feature "create review", %Q{
     review_colin = {description: "He's a hottie", rating: 10}
 
     sign_in lizzie
-    visit actor_path(colin[:id])
+    visit actor_path(colin.id)
     click_link 'Create New Review'
-    fill_in "Description", with: "#{review_colin[:description]}"
-    fill_in "Rating", with: "#{review_colin[:rating]}"
+    fill_in "Description", with: review_colin[:description]
+    fill_in "Rating", with: review_colin[:rating]
     click_button 'Create Review'
 
-    expect(page).to have_content("#{lizzie[:first_name]}")
-    expect(page).to have_content("#{review_colin[:description]}")
-    expect(page).to have_content("#{review_colin[:rating]}")
+    expect(page).to have_content(lizzie[:first_name])
+    expect(page).to have_content(review_colin[:description])
+    expect(page).to have_content(review_colin[:rating])
   end
 
   scenario "fails to create review when user enters invalid information" do
@@ -36,7 +36,7 @@ feature "create review", %Q{
     colin = FactoryGirl.create(:colin)
 
     sign_in lizzie
-    visit new_actor_review_path(colin[:id])
+    visit new_actor_review_path(colin.id)
     click_button 'Create Review'
 
     expect(page).to have_content("Rating can't be blank")
@@ -46,7 +46,7 @@ feature "create review", %Q{
   scenario "fails to create review for an actor with an unauthenticated user" do
     colin = FactoryGirl.create(:colin)
 
-    visit actor_path(colin[:id])
+    visit actor_path(colin.id)
 
     expect(page).not_to have_content("Create New Review")
   end

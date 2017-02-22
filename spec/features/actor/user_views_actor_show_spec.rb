@@ -16,23 +16,23 @@ feature "view actor show", %Q{
     olie = FactoryGirl.create(:olie)
 
     visit root_path
-    click_link "#{olie.full_name}"
+    click_link olie.full_name
 
-    expect(page).to have_current_path("/actors/#{olie[:id]}")
-    expect(page).to have_content("#{olie[:first_name]} #{olie[:last_name]}")
-    expect(page).to have_content("#{olie[:description]}")
-    expect(page).to have_content("#{olie[:movie]}")
-    expect(page).to have_content("#{olie[:book_title]}")
-    expect(page).to have_content("#{olie[:year]}")
+    expect(page).to have_current_path(actor_path(olie.id))
+    expect(page).to have_content(olie.full_name)
+    expect(page).to have_content(olie.description)
+    expect(page).to have_content(olie.movie)
+    expect(page).to have_content(olie.book_title)
+    expect(page).to have_content(olie.year)
   end
 
   scenario "sucessfully view available actor details" do
     colin = FactoryGirl.create(:colin)
 
-    visit "/actors/#{colin[:id]}"
+    visit actor_path(colin.id)
 
-    expect(page).to have_current_path("/actors/#{colin[:id]}")
-    expect(page).to have_content("#{colin[:first_name]} #{colin[:last_name]}")
+    expect(page).to have_current_path(actor_path(colin.id))
+    expect(page).to have_content(colin.full_name)
     expect(page).not_to have_content("Movie")
     expect(page).not_to have_content("Book Title")
     expect(page).not_to have_content("()")
