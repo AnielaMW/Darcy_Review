@@ -13,8 +13,8 @@ feature "edits account", %Q{
     # * If all information is complete, User is updated.
     # * If information is incomplete, User gets error message.
 
-  scenario "sucessfully create account when user enters valid information" do
-    lizzie = FactoryGirl.create(:user)
+  scenario "sucessfully update account when user enters valid information" do
+    lizzie = FactoryGirl.create(:lizzie)
     elizabeth = {first_name: "Elizabeth", last_name: "Darcy", email: "love@pemberly.uk"}
 
     sign_in lizzie
@@ -31,8 +31,8 @@ feature "edits account", %Q{
     expect(page).to have_content("Sign Out")
   end
 
-  scenario "fails to create account when user enters invalid information" do
-    lizzie = FactoryGirl.create(:user)
+  scenario "fails to update account when user enters invalid information" do
+    lizzie = FactoryGirl.create(:lizzie)
 
     sign_in lizzie
     visit root_path

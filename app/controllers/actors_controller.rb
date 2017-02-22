@@ -1,12 +1,12 @@
 class ActorsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:index, :show]
+  before_action :set_actor, only: [:show, :edit, :update, :destroy]
 
   def index
     @actors = Actor.all
   end
 
   def show
-    @actor = Actor.find(params[:id])
   end
 
   def new
@@ -28,9 +28,25 @@ class ActorsController < ApplicationController
   end
 
   def update
+    if @actor.update(actor_params)
+      flash[:notice] = "Your Darcy has been updated!"
+      redirect_to actor_path(@actor)
+    else
+      flash[:alert] = @actor.errors.full_messages.join(", ")
+      redirect_to edit_actor_path(@actor)
+    end
+  end
+
+  def destroy
+    @actor.destroy
+    redirect_to root_path
   end
 
   private
+  def set_actor
+    @actor = Actor.find(params[:id])
+  end
+
   def actor_params
     params.require(:actor).permit(
       :first_name,

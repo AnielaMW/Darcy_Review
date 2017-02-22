@@ -10,7 +10,7 @@ feature "deletes account", %Q{
     # * User can delete account
 
   scenario "sucessfully delete account" do
-    lizzie = FactoryGirl.create(:user)
+    lizzie = FactoryGirl.create(:lizzie)
 
     sign_in lizzie
     visit root_path

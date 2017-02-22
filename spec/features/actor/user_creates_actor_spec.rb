@@ -2,7 +2,7 @@ require "rails_helper"
 
 feature "create actor", %Q{
   As an authenticated user
-  I want to add an item
+  I want to add an Actor
   So that others can review it
   } do
 
@@ -14,7 +14,7 @@ feature "create actor", %Q{
     # * If required information is incomplete, Actor is not created and user gets error message.
 
   scenario "sucessfully create actor when user enters all information" do
-    lizzie = FactoryGirl.create(:user)
+    lizzie = FactoryGirl.create(:lizzie)
     sam = {first_name: "Sam", last_name: "Riley", description: "A Darcy that can lock swords as well as lips. ;)", movie: "Pride and Prejudice and Zombies", book_title: "Pride and Prejudice and Zombies", year: 2016}
 
     sign_in lizzie
@@ -32,7 +32,7 @@ feature "create actor", %Q{
   end
 
   scenario "sucessfully create actor when user enters only required information" do
-    lizzie = FactoryGirl.create(:user)
+    lizzie = FactoryGirl.create(:lizzie)
     matt = {first_name: "Matthew", last_name: "Macfadyen"}
 
     sign_in lizzie
@@ -46,7 +46,7 @@ feature "create actor", %Q{
   end
 
   scenario "fails to create actor when user enters invalid information" do
-    lizzie = FactoryGirl.create(:user)
+    lizzie = FactoryGirl.create(:lizzie)
 
     sign_in lizzie
     visit root_path

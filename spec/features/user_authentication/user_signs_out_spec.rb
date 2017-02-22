@@ -10,7 +10,7 @@ feature "sign_out of account", %Q{
     # * User signs out
 
   scenario "sucessfully sign_out when user signs_out" do
-    lizzie = FactoryGirl.create(:user)
+    lizzie = FactoryGirl.create(:lizzie)
 
     sign_in lizzie
     visit root_path

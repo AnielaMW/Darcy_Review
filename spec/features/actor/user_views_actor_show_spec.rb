@@ -1,7 +1,7 @@
 require "rails_helper"
 
 feature "view actor show", %Q{
-  As an authenticated user
+  As a user
   I want to view the details of an item
   So that I can get more information about it
   } do
@@ -13,12 +13,10 @@ feature "view actor show", %Q{
     # * User should not see a detail section if the information is unavailable.
     # * User should get an error if not signed_in.
 
-  scenario "sucessfully view full actor details when signed_in" do
-    lizzie = FactoryGirl.create(:user)
-    colin = FactoryGirl.create(:actor)
+  scenario "sucessfully view full actor details" do
+    colin = FactoryGirl.create(:colin)
     olie = FactoryGirl.create(:olie)
 
-    sign_in lizzie
     visit root_path
     click_link "#{olie.full_name}"
 
@@ -30,11 +28,9 @@ feature "view actor show", %Q{
     expect(page).to have_content("#{olie[:year]}")
   end
 
-  scenario "sucessfully view available actor details when signed_in" do
-    lizzie = FactoryGirl.create(:user)
-    colin = FactoryGirl.create(:actor)
+  scenario "sucessfully view available actor details" do
+    colin = FactoryGirl.create(:colin)
 
-    sign_in lizzie
     visit "/actors/#{colin[:id]}"
 
     expect(page).to have_current_path("/actors/#{colin[:id]}")
@@ -43,14 +39,5 @@ feature "view actor show", %Q{
     expect(page).not_to have_content("Book Title")
     expect(page).not_to have_content("()")
     expect(page).not_to have_content("Description")
-  end
-
-  scenario "fail to view actor details when not signed_in" do
-    colin = FactoryGirl.create(:actor)
-
-    visit "/actors/#{colin[:id]}"
-
-    expect(page).not_to have_current_path("/actors/#{colin[:id]}")
-    expect(page).not_to have_content(colin.year)
   end
 end

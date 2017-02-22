@@ -16,15 +16,15 @@ feature "create account", %Q{
 
 
   scenario "sucessfully create account when user enters valid information" do
-    jane = {first_name: "Jane", last_name: "Bennet", email: "living@netherfield.uk", password: "bingleysbabe"}
+    kitty = {first_name: "Kathrine", last_name: "Bennet", email: "coughing@longbourne.uk", password: "wild4dancing"}
 
     visit root_path
     click_link 'Sign Up'
-    fill_in "First Name", with: "#{jane[:first_name]}"
-    fill_in "Last Name", with: "#{jane[:last_name]}"
-    fill_in "Email", with: "#{jane[:email]}"
-    fill_in "Password", with: "#{jane[:password]}"
-    fill_in "Confirm Password", with: "#{jane[:password]}"
+    fill_in "First Name", with: "#{kitty[:first_name]}"
+    fill_in "Last Name", with: "#{kitty[:last_name]}"
+    fill_in "Email", with: "#{kitty[:email]}"
+    fill_in "Password", with: "#{kitty[:password]}"
+    fill_in "Confirm Password", with: "#{kitty[:password]}"
     click_button "Sign Up"
 
     expect(page).to have_content("Welcome! Your favorite Darcy awaits.")
