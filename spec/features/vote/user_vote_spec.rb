@@ -15,22 +15,45 @@ feature "vote for reviews", %Q{
   scenario "sucessfully up vote a review for an actor" do
     vote = FactoryGirl.create(:vote)
     review = FactoryGirl.create(:review, actor_id: vote.review.actor_id)
-    lower_review = FactoryGirl.create(:lower_review, review_id: review.id)
+    lower_vote = FactoryGirl.create(:lower_vote, review_id: review.id)
 
     visit actor_path(vote.review.actor.id)
-    click_link 'Agree'
+    click_link 'Vote'
+    choose 'Agree'
 
     expect(page).to have_current_path(actor_path(review.actor.id))
+    reviews = page.all("div#revlist ul li")
+    expect(reviews[0]).to have_content("Ranking: #{vote.review.ranking}")
+    expect(reviews[1]).to have_content("Ranking: #{lower_vote.review.ranking}")
   end
 
   scenario "sucessfully down vote a review for an actor" do
     vote = FactoryGirl.create(:vote)
     review = FactoryGirl.create(:review, actor_id: vote.review.actor_id)
-    higher_review = FactoryGirl.create(:higher_review, review_id: review.id)
+    higher_vote = FactoryGirl.create(:higher_vote, review_id: review.id)
 
     visit actor_path(vote.review.actor.id)
     click_link 'Disagree'
 
-    expect(page).to have_current_path(actor_path(review.actor.id))
+    reviews = page.all("div#revlist ul li")
+    expect(reviews[0]).to have_content("Ranking: #{higher_vote.review.ranking}")
+    expect(reviews[1]).to have_content("Ranking: #{vote.review.ranking}")
+  end
+
+  scenario "sucessfully change the vote of a review" do
+    vote = FactoryGirl.create(:vote)
+    vote1 = FactoryGirl.create(:vote, review_id: vote.review_id)
+    vote2 = FactoryGirl.create(:vote, review_id: vote.review_id)
+    vote3 = FactoryGirl.create(:vote, review_id: vote.review_id)
+
+    visit actor_path(vote.review.actor.id)
+
+    main_review = page.all("div#revlist ul li")
+    expect(main_review).to have_content("Ranking: 4")
+
+    click_link 'Disagree'
+
+    main_review = page.all("div#revlist ul li")
+    expect(main_review).to have_content("Ranking: 3")
   end
 end

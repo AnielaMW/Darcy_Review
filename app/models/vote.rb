@@ -3,7 +3,11 @@ class Vote < ApplicationRecord
   belongs_to :review
 
   RATING = [
-    [1, "Agree"],
-    [-1, "Disagree"]
+    [true, "Agree"],
+    [false, "Disagree"]
   ]
+
+  validates :rating, inclusion: { in: [true, false] }
+  validates :user_id, presence: true
+  validates :review_id, presence: true
 end

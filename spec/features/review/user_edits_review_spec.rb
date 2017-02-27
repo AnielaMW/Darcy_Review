@@ -25,7 +25,7 @@ feature "edit review", %Q{
     expect(page).to have_current_path(edit_review_path(review.id))
 
     fill_in "Description", with: edit_review[:description]
-    fill_in "Rating", with: edit_review[:rating]
+    choose edit_review[:rating]
     click_button "Update Review"
 
     expect(page).to have_current_path(review_path(review.id))
@@ -35,12 +35,12 @@ feature "edit review", %Q{
 
   scenario "fails to edit review when user is creator and enters invalid information" do
     review = FactoryGirl.create(:review)
-    edit_review = {description: "", rating: ""}
+    edit_review = {description: "", rating: nil}
 
     sign_in review.user
     visit edit_review_path(review.id)
     fill_in "Description", with: edit_review[:description]
-    fill_in "Rating", with: edit_review[:rating]
+    choose edit_review[:rating]
     click_button "Update Review"
 
     expect(page).not_to have_current_path(review_path(review.id))
@@ -56,7 +56,7 @@ feature "edit review", %Q{
     sign_in jane
     visit edit_review_path(review.id)
     fill_in "Description", with: edit_review[:description]
-    fill_in "Rating", with: edit_review[:rating]
+    choose edit_review[:rating]
     click_button "Update Review"
 
     expect(page).to have_current_path(review_path(review.id))
@@ -71,7 +71,7 @@ feature "edit review", %Q{
     sign_in jane
     visit edit_review_path(review.id)
     fill_in "Description", with: edit_review[:description]
-    fill_in "Rating", with: edit_review[:rating]
+    choose edit_review[:rating]
     click_button "Update Review"
 
     expect(page).not_to have_current_path(review_path(review.id))

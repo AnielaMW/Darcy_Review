@@ -1,0 +1,11 @@
+<%= form_for [@review, @vote] do |f| %>
+
+  <div class="row">
+    <%= f.label(:rating, "Vote") %>
+    <%= f.collection_radio_buttons(:rating, @rating_collection, :first, :last) %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

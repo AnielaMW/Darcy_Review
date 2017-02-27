@@ -35,6 +35,12 @@
           <li>
             <%= review.rating %> - <%= review.user.first_name %> says:
             <p><%= review.description %> <%= link_to review[:id], review_path(review[:id]) %></p>
+
+            <% if review.votes %>
+              <p>Ranking: <%= review.ranking %></p>
+            <% end %>
+            <%= link_to "Vote", new_review_vote_path(@review[:id]) %>
+
           </li>
         <% end %>
       </ul>

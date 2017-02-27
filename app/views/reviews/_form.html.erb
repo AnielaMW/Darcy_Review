@@ -5,9 +5,9 @@
     <%= f.text_field :description %>
   </div>
 
-  <div class="field">
-    <%= f.label :rating, "Rating" %><br />
-    <%= f.text_field :rating %>
+  <div class="row">
+    <%= f.label(:rating, "Rating") %>
+    <%= f.collection_radio_buttons(:rating, @rating_collection, :first, :last) %>
   </div>
 
   <div class="actions">

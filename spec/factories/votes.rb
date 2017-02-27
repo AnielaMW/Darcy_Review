@@ -1,14 +1,14 @@
 FactoryGirl.define do
   factory :vote do
-    rating 1
+    rating "1"
     review
     user
 
-    factory :lower_review do
-      rating -1
+    factory :lower_vote do
+      rating "-1"
     end
 
-    factory :higher_review do
+    factory :higher_vote do
     end
   end
 end
