@@ -3,6 +3,7 @@ class ReviewsController < ApplicationController
   before_action :set_actor, only: [:new, :create]
   before_action :set_review, only: [:show, :edit, :update, :destroy]
   before_action :find_actor, only: [:show]
+  before_action :collections, only: [:new, :create, :edit, :update]
 
   def show
   end
@@ -51,6 +52,10 @@ class ReviewsController < ApplicationController
 
   def find_actor
     @actor = @review.actor
+  end
+
+  def collections
+    @rating_collection = Review::RATINGS
   end
 
   def review_params

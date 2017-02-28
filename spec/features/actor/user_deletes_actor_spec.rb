@@ -37,12 +37,12 @@ feature "delete actor", %Q{
     lizzie = FactoryGirl.create(:lizzie)
     colin = FactoryGirl.create(:colin)
 
-    visit actor_path(olie.id)
+    visit actor_path(colin.id)
 
     expect(page).not_to have_content("Delete Actor")
 
     sign_in lizzie
-    visit actor_path(olie.id)
+    visit actor_path(colin.id)
 
     expect(page).not_to have_content("Delete Actor")
   end

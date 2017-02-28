@@ -23,7 +23,7 @@ feature "create review", %Q{
     visit actor_path(colin.id)
     click_link 'Create New Review'
     fill_in "Description", with: review_colin[:description]
-    fill_in "Rating", with: review_colin[:rating]
+    choose review_colin[:rating]
     click_button 'Create Review'
 
     expect(page).to have_content(lizzie[:first_name])
