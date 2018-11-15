@@ -10,4 +10,11 @@ class Actor < ApplicationRecord
   def full_name
     [first_name, last_name].join(' ')
   end
+
+  before_save :blank_nil
+
+  def blank_nil
+    nills = %w( movie book_title description)
+    nills.each { |att| self[att] = nil if self[att].blank? }
+  end
 end

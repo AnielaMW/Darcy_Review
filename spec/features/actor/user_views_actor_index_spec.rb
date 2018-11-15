@@ -11,14 +11,12 @@ feature "view actor index", %Q{
     # * User should get an error if not signed_in.
 
   scenario "sucessfully view actor list" do
-    lizzie = FactoryGirl.create(:lizzie)
     colin = FactoryGirl.create(:colin)
     olie = FactoryGirl.create(:olie)
 
-    sign_in lizzie
     visit root_path
 
-    expect(page).to have_content("#{colin[:first_name]} #{colin[:last_name]}")
-    expect(page).to have_content("#{olie[:first_name]} #{olie[:last_name]}")
+    expect(page).to have_content(colin.full_name)
+    expect(page).to have_content(olie.full_name)
   end
 end

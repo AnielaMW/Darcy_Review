@@ -1,0 +1,16 @@
+<%= form_for [@actor, @review] do |f| %>
+
+  <div class="field">
+    <%= f.label :description, "Description" %><br />
+    <%= f.text_field :description %>
+  </div>
+
+  <div class="row">
+    <%= f.label(:rating, "Rating") %>
+    <%= f.collection_radio_buttons(:rating, @rating_collection, :first, :last) %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

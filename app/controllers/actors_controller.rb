@@ -38,6 +38,9 @@ class ActorsController < ApplicationController
   end
 
   def destroy
+    if @actor.reviews
+      @actor.reviews.destroy
+    end
     @actor.destroy
     redirect_to root_path
   end
